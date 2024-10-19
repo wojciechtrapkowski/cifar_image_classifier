@@ -29,7 +29,7 @@ class DatasetLoader:
         # Create loader for the training set
         self.trainloader = trainloader = torch.utils.data.DataLoader(
             trainset,
-            batch_size=32,
+            batch_size=256,
             shuffle=True,
             num_workers=1,  # Number of threads for loading data
         )
@@ -44,7 +44,7 @@ class DatasetLoader:
 
         # Create loader for the test set
         self.testloader = torch.utils.data.DataLoader(
-            testset, batch_size=32, shuffle=False, num_workers=1
+            testset, batch_size=256, shuffle=False, num_workers=1
         )
 
         self.classes = (

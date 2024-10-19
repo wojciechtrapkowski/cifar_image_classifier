@@ -4,34 +4,23 @@ This project implements a deep Convolutional Neural Network (CNN) to classify im
 
 ## Table of Contents
 
-- [Features](#features)
 - [Architecture](#architecture)
 - [Techniques Used](#techniques-used)
 - [Usage](#usage)
 - [Model Training](#model-training)
 - [Testing the Model](#testing-the-model)
-- [Model Performance](#model-performance)
+- [Models Performance](#models-performance)
 - [References](#references)
-
-## Features
-
-- **Convolutional Neural Network**: A multi-layer CNN designed to classify images from the CIFAR-10 dataset.
-- **Batch Normalization**: Improves training stability and speeds up convergence.
-- **Residual Connections**: Helps the network learn better by allowing gradients to bypass certain layers.
-- **Data Augmentation**: Enhances the training dataset by applying transformations such as random cropping, flipping, and rotation to improve model generalization.
-- **Custom Image Testing**: Test the model on any image by passing an image folder path.
-- **Model Saving and Loading**: Automatically saves the model after training and loads it for evaluation.
-- **Multi-Platform**: Supports training on devices with GPU acceleration (e.g., Apple M1 or CUDA-enabled GPUs).
 
 ## Architecture
 
 The architecture is built with the following components:
 
-- 5 convolutional layers with increasing depth (32, 64, 128, 256, 512 channels)
-- Batch normalization after each convolutional layer
-- Max pooling layers to downsample feature maps
-- 2 fully connected layers to map features to CIFAR-10 classes
-- Residual connections between layers to improve gradient flow
+- **Convolutional Layers**: A total of 5 convolutional layers with increasing depth (32, 64, 128, 256, 512 channels).
+- **Residual Blocks**: The inclusion of multiple residual blocks enhances gradient flow and improves learning capabilities.
+- **Batch Normalization**: Applied after each convolutional layer to stabilize and accelerate training.
+- **Max Pooling Layers**: Utilized to downsample feature maps, reducing spatial dimensions while retaining essential information.
+- **Dropout Layers**: Incorporated after fully connected layers to prevent overfitting during training.
 
 ### Network Layers Overview:
 
@@ -50,10 +39,13 @@ The architecture is built with the following components:
 3. **Data Augmentation**:
    - Applies random transformations to the training images, increasing dataset variability and helping to prevent overfitting.
 
-4. **Adam Optimizer**:
+4. **Dropout**:
+   - A regularization technique that randomly sets a fraction of the input units to zero during training, reducing the risk of overfitting and improving model generalization.
+
+5. **Adam Optimizer**:
    - Used for optimization, offering an adaptive learning rate and faster convergence compared to stochastic gradient descent.
 
-5. **Learning Rate Scheduling**:
+6. **Learning Rate Scheduling**:
    - A learning rate scheduler reduces the learning rate over time to help the model converge efficiently.
 
 ## Usage
@@ -84,20 +76,15 @@ If you already have a trained model, set the TEST_MODEL flag to True to test it 
 
 To test the model on your own images, place your images inside the tests/ directory and run the main script. The model will make predictions on the images and output the predicted labels.
 
-## Model Performance
+## Models Performance
 
 This section outlines the performance of different models created by this project, including their accuracy metrics.
 
 | Model Name                     | Accuracy (%) | Description                             |
 |--------------------------------|--------------|-----------------------------------------|
-| Cifar Net 8   | 86           |  |
-
-## References
-	1.	CIFAR-10 Dataset: CIFAR-10
-	2.	Residual Networks (ResNet): He, Kaiming, et al. “Deep Residual Learning for Image Recognition.” ResNet Paper
-	3.	Adam Optimizer: Diederik P. Kingma and Jimmy Ba, “Adam: A Method for Stochastic Optimization.” Adam Paper
-	4.	PyTorch Documentation: PyTorch
-	5.	Learning Rate Scheduling: Learning Rate Schedulers in PyTorch
+| Cifar Net 8   | 86           | Managed to achieve this accuracy with residual blocks & number of epochs equal to 50. |
+| Cifar Net 9   | 87.40           | Managed to achieve this accuracy by increasing number of residual blocks & number of epochs to 80. |
+| Cifar Net 10  |            | Managed to achieve this accuracy by increasing batch size to 256 & using SGD rather than Adam. Number of epochs was decreased to 10. |
 
 
 
