@@ -5,10 +5,16 @@ import torchvision.transforms as transforms
 
 class DatasetLoader:
     def __init__(self):
+        # Use data augmentation & normalization
         transform = transforms.Compose(
             [
+                transforms.RandomHorizontalFlip(),
+                transforms.RandomRotation(10),
+                transforms.RandomCrop(32, padding=4),
                 transforms.ToTensor(),
-                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                transforms.Normalize(
+                    mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.2010]
+                ),
             ]
         )
 

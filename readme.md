@@ -1,6 +1,6 @@
 # Convolutional Neural Network for CIFAR-10 Classification
 
-This project implements a deep Convolutional Neural Network (CNN) to classify images from the CIFAR-10 dataset, a standard dataset in computer vision tasks. The CNN is designed with various advanced techniques like **Batch Normalization** and **Residual Connections** to improve the performance and generalization of the model. Additionally, the project allows testing the model on custom images and includes features like **model saving** and **loading** for training and evaluation efficiency.
+This project implements a deep Convolutional Neural Network (CNN) to classify images from the CIFAR-10 dataset, a standard dataset in computer vision tasks. The CNN is designed with various advanced techniques like **Batch Normalization**, **Residual Connections**, and **Data Augmentation** to improve the performance and generalization of the model. Additionally, the project allows testing the model on custom images and includes features like **model saving** and **loading** for training and evaluation efficiency.
 
 ## Table of Contents
 
@@ -17,6 +17,7 @@ This project implements a deep Convolutional Neural Network (CNN) to classify im
 - **Convolutional Neural Network**: A multi-layer CNN designed to classify images from the CIFAR-10 dataset.
 - **Batch Normalization**: Improves training stability and speeds up convergence.
 - **Residual Connections**: Helps the network learn better by allowing gradients to bypass certain layers.
+- **Data Augmentation**: Enhances the training dataset by applying transformations such as random cropping, flipping, and rotation to improve model generalization.
 - **Custom Image Testing**: Test the model on any image by passing an image folder path.
 - **Model Saving and Loading**: Automatically saves the model after training and loads it for evaluation.
 - **Multi-Platform**: Supports training on devices with GPU acceleration (e.g., Apple M1 or CUDA-enabled GPUs).
@@ -41,14 +42,17 @@ The architecture is built with the following components:
 
 1. **Batch Normalization**:
    - Helps stabilize the training process and accelerates convergence.
-   
+
 2. **Residual Connections**:
    - Inspired by ResNet architecture, residual blocks allow gradients to flow directly to earlier layers.
 
-3. **Adam Optimizer**:
+3. **Data Augmentation**:
+   - Applies random transformations to the training images, increasing dataset variability and helping to prevent overfitting.
+
+4. **Adam Optimizer**:
    - Used for optimization, offering an adaptive learning rate and faster convergence compared to stochastic gradient descent.
 
-4. **Learning Rate Scheduling**:
+5. **Learning Rate Scheduling**:
    - A learning rate scheduler reduces the learning rate over time to help the model converge efficiently.
 
 ## Usage

@@ -69,7 +69,7 @@ def main():
         except FileNotFoundError:
             print("Model not found, creating new model.")
     else:
-        print("Training model.")
+        print("Training new model.")
         model.train_model(NUM_EPOCHS)
 
     if TEST_MODEL:
