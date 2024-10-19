@@ -32,42 +32,45 @@ class ConvolutionalNeuralNetwork(nn.Module):
     def __init__(self, loader, device):
         super(ConvolutionalNeuralNetwork, self).__init__()
 
-        # Define the convolutional layers
-        self.conv1 = nn.Conv2d(3, 32, 3, padding=1)
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1)
         self.bn1 = nn.BatchNorm2d(32)
 
-        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
-        self.bn2 = nn.BatchNorm2d(64)
+        # Residual blocks
+        self.res_block1 = ResidualBlock(32, 64, stride=2)  # Reducing spatial dimensions
+        self.res_block2 = ResidualBlock(64, 128, stride=2)
+        self.res_block3 = ResidualBlock(128, 256, stride=2)
+        self.res_block4 = ResidualBlock(256, 512, stride=2)
 
-        self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
-        self.bn3 = nn.BatchNorm2d(128)
+        # Global average pooling
+        self.global_avg_pool = nn.AdaptiveAvgPool2d((1, 1))
 
-        self.conv4 = nn.Conv2d(128, 256, 3, padding=1)
-        self.bn4 = nn.BatchNorm2d(256)
-
-        self.conv5 = nn.Conv2d(256, 512, 3, padding=1)
-        self.bn5 = nn.BatchNorm2d(512)
-
-        self.pool = nn.MaxPool2d(2, 2)  # 2x2 max pooling
-
-        # Define the fully connected layers
-        self.fc1 = nn.Linear(512 * 4 * 4, 512)
+        # Fully connected layers
+        self.fc1 = nn.Linear(512, 512)
+        self.dropout = nn.Dropout(p=0.5)
         self.fc2 = nn.Linear(512, 10)  # 10 output classes for CIFAR-10
 
+        # Store loader and device references
         self.loader = loader
         self.device = device
 
     def forward(self, x):
-        x = self.pool(self.bn1(F.relu(self.conv1(x))))
-        x = self.pool(self.bn2(F.relu(self.conv2(x))))
-        x = self.pool(self.bn3(F.relu(self.conv3(x))))
-        x = self.bn4(F.relu(self.conv4(x)))
-        x = self.bn5(F.relu(self.conv5(x)))
+        x = F.relu(self.bn1(self.conv1(x)))
 
-        # Flatten the image for the fully connected layer
-        x = x.view(-1, 512 * 4 * 4)
+        # Pass through residual blocks
+        x = self.res_block1(x)
+        x = self.res_block2(x)
+        x = self.res_block3(x)
+        x = self.res_block4(x)
+
+        # Global average pooling to reduce dimensions before fully connected layers
+        x = self.global_avg_pool(x)
+        x = x.view(x.size(0), -1)  # Flatten
+
+        # Fully connected layers with dropout
         x = F.relu(self.fc1(x))
+        x = self.dropout(x)
         x = self.fc2(x)
+
         return x
 
     def train_model(self, num_epochs=50):
