@@ -10,6 +10,7 @@ This project implements a deep Convolutional Neural Network (CNN) to classify im
 - [Usage](#usage)
 - [Model Training](#model-training)
 - [Testing the Model](#testing-the-model)
+- [Model Performance](#model-performance)
 - [References](#references)
 
 ## Features
@@ -82,6 +83,14 @@ To train the model, set the TRAIN_MODEL flag to True in the consts file. You can
 If you already have a trained model, set the TEST_MODEL flag to True to test it on the CIFAR-10 test set.
 
 To test the model on your own images, place your images inside the tests/ directory and run the main script. The model will make predictions on the images and output the predicted labels.
+
+## Model Performance
+
+This section outlines the performance of different models created by this project, including their accuracy metrics.
+
+| Model Name                     | Accuracy (%) | Description                             |
+|--------------------------------|--------------|-----------------------------------------|
+| Cifar Net 8   | 86           |  |
 
 ## References
 	1.	CIFAR-10 Dataset: CIFAR-10
