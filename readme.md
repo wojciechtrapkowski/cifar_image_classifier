@@ -24,12 +24,6 @@ The architecture is built with the following components:
 - **Max Pooling Layers**: Utilized to downsample feature maps, reducing spatial dimensions while retaining essential information.
 - **Dropout Layers**: Incorporated after fully connected layers to prevent overfitting during training.
 
-### Network Layers Overview:
-
-- Conv2D -> BatchNorm -> ReLU -> MaxPool
-- Residual Connections
-- Fully Connected (FC)
-
 ## Techniques Used
 
 1. **Batch Normalization**:
