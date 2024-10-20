@@ -1,4 +1,4 @@
-NUM_EPOCHS = 16
+NUM_EPOCHS = 200
 USE_ADAM = False
 
 MODEL_SAVE_PATH = "models/cifar_net.pth"

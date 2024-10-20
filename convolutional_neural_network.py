@@ -66,7 +66,7 @@ class ConvolutionalNeuralNetwork(nn.Module):
             scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
         else:
             optimizer = optim.SGD(
-                self.parameters(), lr=0.1, momentum=0.9, weight_decay=5e-4
+                self.parameters(), lr=0.05, momentum=0.90, weight_decay=5e-5
             )
             # scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
             scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=200)
@@ -89,6 +89,8 @@ class ConvolutionalNeuralNetwork(nn.Module):
                 if i % 100 == 99:
                     print(f"[{epoch + 1}, {i + 1}] loss: {running_loss / 2000}")
                     running_loss = 0.0
+            if epoch % 10 == 0:
+                self.test_model()
 
         print("Training complete.")
 
