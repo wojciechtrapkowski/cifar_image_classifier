@@ -82,9 +82,12 @@ This section outlines the performance of different models created by this projec
 
 | Model Name                     | Accuracy (%) | Description                             |
 |--------------------------------|--------------|-----------------------------------------|
-| Cifar Net 8   | 86           | Managed to achieve this accuracy with residual blocks & number of epochs equal to 50. |
+| Cifar Net 8   | 86           | Managed to achieve this accuracy with residual blocks & number of epochs equal to 50. First model that has satisfying accuracy. |
 | Cifar Net 9   | 87.40           | Managed to achieve this accuracy by increasing number of residual blocks & number of epochs to 80. |
-| Cifar Net 10  |            | Managed to achieve this accuracy by increasing batch size to 256 & using SGD rather than Adam. Number of epochs was decreased to 10. |
+| Cifar Net 10  |  77.77          | Increased batch size to 256 & used SGD rather than Adam. Number of epochs was decreased to 10. |
+| Cifar Net 11  |     85.63       | Increased number of epochs to 50. |
+| Cifar Net 12  |      87.00      | Returned to using Adam. Increased number of epochs to 80 |
+| Cifar Net 15 |      | Added more residual blocks. |
 
 
 

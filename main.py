@@ -61,24 +61,25 @@ def main():
     loader = DatasetLoader()
     model = ConvolutionalNeuralNetwork(loader, device).to(device)
 
-    if not TRAIN_MODEL:
+    if LOAD_MODEL:
         try:
             model.load_state_dict(torch.load(MODEL_LOAD_PATH))
             model.eval()
             print("Model loaded.")
         except FileNotFoundError:
             print("Model not found, creating new model.")
-    else:
-        print("Training new model.")
+
+    if TRAIN_MODEL:
+        print("Training model.")
         model.train_model(NUM_EPOCHS)
 
     if TEST_MODEL:
         model.test_model()
 
-        if SAVE_MODEL:
-            save_path = get_model_save_path()
-            torch.save(model.state_dict(), save_path)
-            print(f"Model saved to {save_path}")
+    if SAVE_MODEL:
+        save_path = get_model_save_path()
+        torch.save(model.state_dict(), save_path)
+        print(f"Model saved to {save_path}")
 
     # Test model on custom images
     test_images_in_folder("tests/", loader.classes, model, device)

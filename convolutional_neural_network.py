@@ -39,11 +39,13 @@ class ConvolutionalNeuralNetwork(nn.Module):
 
         # Increased number of residual blocks
         self.res_blocks = nn.Sequential(
-            ResidualBlock(32, 64, stride=2),  # Reducing spatial dimensions
+            ResidualBlock(32, 64, stride=2),
             ResidualBlock(64, 128, stride=2),
             ResidualBlock(128, 256, stride=2),
             ResidualBlock(256, 256),
             ResidualBlock(256, 512, stride=2),
+            ResidualBlock(512, 512),
+            ResidualBlock(512, 512),
             ResidualBlock(512, 512),
         )
 
