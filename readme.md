@@ -11,6 +11,8 @@ This project implements a deep Convolutional Neural Network (CNN) to classify im
 - [Testing the Model](#testing-the-model)
 - [Models Performance](#models-performance)
 - [References](#references)
+- [Summary](#summary)
+
 
 ## Architecture
 
@@ -89,8 +91,8 @@ This section outlines the performance of different models created by this projec
 | Cifar Net 12  |      87.00      | Returned to using Adam. Increased number of epochs to 80 |
 | Cifar Net 16 |    87.70  | Added more residual blocks. |
 | Cifar Net 18 |    87.70  | Used SGD with weight decaying & Cosine Annealing Learning Rate Scheduler |
-| Cifar Net 19 |      | Changed SGD momentum, increased number of epochs to 200. After 80 epochs there is no improve in accuracy. |
+| Cifar Net 19 |  88.80    | Unfortunately, due to bug it was deleted. Changed SGD momentum, increased number of epochs to 200. After 80 epochs there are fluctuations in improvement of accuracy. |
 
+## Summary
 
-
-
+Throughout this project, I successfully designed and trained multiple CNN architectures, achieving an accuracy of up to 88.80% on the CIFAR-10 classification task. By implementing advanced techniques such as residual connections and data augmentation, I enhanced the model’s performance and generalization capabilities. This experience deepened my understanding of convolutional networks and solidified my skills in utilizing PyTorch for deep learning applications.
