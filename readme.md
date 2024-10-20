@@ -89,7 +89,7 @@ This section outlines the performance of different models created by this projec
 | Cifar Net 12  |      87.00      | Returned to using Adam. Increased number of epochs to 80 |
 | Cifar Net 16 |    87.70  | Added more residual blocks. |
 | Cifar Net 18 |    87.70  | Used SGD with weight decaying & Cosine Annealing Learning Rate Scheduler |
-| Cifar Net 19 |      | Changed SGD momentum, increased number of epochs to 200. |
+| Cifar Net 19 |      | Changed SGD momentum, increased number of epochs to 200. After 80 epochs there is no improve in accuracy. |
 
 
 
