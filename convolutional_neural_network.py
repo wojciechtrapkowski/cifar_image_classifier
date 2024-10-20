@@ -3,57 +3,36 @@ import torch.optim as optim
 import torch.nn as nn
 import torch.nn.functional as F
 
+from residual_block import ResidualBlock
 from consts import *
-
-
-class ResidualBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, stride=1):
-        super(ResidualBlock, self).__init__()
-        self.conv1 = nn.Conv2d(
-            in_channels, out_channels, kernel_size=3, stride=stride, padding=1
-        )
-        self.bn1 = nn.BatchNorm2d(out_channels)
-        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1)
-        self.bn2 = nn.BatchNorm2d(out_channels)
-
-        self.shortcut = nn.Sequential()
-        if stride != 1 or in_channels != out_channels:
-            self.shortcut = nn.Sequential(
-                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride),
-                nn.BatchNorm2d(out_channels),
-            )
-
-    def forward(self, x):
-        out = F.relu(self.bn1(self.conv1(x)))
-        out = self.bn2(self.conv2(out))
-        out += self.shortcut(x)  # Residual connection (skip connection)
-        return F.relu(out)
 
 
 class ConvolutionalNeuralNetwork(nn.Module):
     def __init__(self, loader, device):
         super(ConvolutionalNeuralNetwork, self).__init__()
 
-        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1)
-        self.bn1 = nn.BatchNorm2d(32)
+        self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3)
+        self.bn1 = nn.BatchNorm2d(64)
+        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
-        # Increased number of residual blocks
+        # Residual blocks with bottleneck architecture
         self.res_blocks = nn.Sequential(
-            ResidualBlock(32, 64, stride=2),
-            ResidualBlock(64, 128, stride=2),
-            ResidualBlock(128, 256, stride=2),
-            ResidualBlock(256, 256),
-            ResidualBlock(256, 512, stride=2),
-            ResidualBlock(512, 512),
-            ResidualBlock(512, 512),
-            ResidualBlock(512, 512),
+            ResidualBlock(64, 64, 256, stride=1),  # Bottleneck block
+            ResidualBlock(256, 64, 256),
+            ResidualBlock(256, 64, 256),
+            ResidualBlock(256, 128, 512, stride=2),  # Downsample
+            ResidualBlock(512, 128, 512),
+            ResidualBlock(512, 128, 512),
+            ResidualBlock(512, 128, 512),
+            ResidualBlock(512, 256, 1024, stride=2),  # Downsample
+            # Add more layers if you want deeper models like ResNet-50 or ResNet-101
         )
 
         # Global average pooling
         self.global_avg_pool = nn.AdaptiveAvgPool2d((1, 1))
 
         # Fully connected layers
-        self.fc1 = nn.Linear(512, 512)
+        self.fc1 = nn.Linear(1024, 512)
         self.dropout = nn.Dropout(p=0.5)
         self.fc2 = nn.Linear(512, 10)  # 10 output classes for CIFAR-10
 
@@ -86,8 +65,11 @@ class ConvolutionalNeuralNetwork(nn.Module):
             optimizer = optim.Adam(self.parameters(), lr=0.001)
             scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
         else:
-            optimizer = optim.SGD(self.parameters(), lr=0.01, momentum=0.9)
-            scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
+            optimizer = optim.SGD(
+                self.parameters(), lr=0.1, momentum=0.9, weight_decay=5e-4
+            )
+            # scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
+            scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=200)
 
         for epoch in range(num_epochs):
             running_loss = 0.0

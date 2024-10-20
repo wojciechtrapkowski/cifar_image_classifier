@@ -87,7 +87,9 @@ This section outlines the performance of different models created by this projec
 | Cifar Net 10  |  77.77          | Increased batch size to 256 & used SGD rather than Adam. Number of epochs was decreased to 10. |
 | Cifar Net 11  |     85.63       | Increased number of epochs to 50. |
 | Cifar Net 12  |      87.00      | Returned to using Adam. Increased number of epochs to 80 |
-| Cifar Net 15 |      | Added more residual blocks. |
+| Cifar Net 16 |    87.70  | Added more residual blocks. |
+| Cifar Net 18 |    87.70  | Used SGD with weight decaying & Cosine Annealing Learning Rate Scheduler |
+
 
 
 
